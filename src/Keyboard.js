@@ -1,7 +1,7 @@
 const startKeyboard = {
   keyboard: [
     [
-      { text: 'Transactions', web_app: { url: 'https://anbuchelva.in/stock-track/transaction?key=' + ENCRYPTION_KEY + '&iv=' + IV_STRING } },
+      { text: 'Transactions', web_app: { url: 'https://anbuchelva.in/stock-track/add-transaction?key=' + ENCRYPTION_KEY + '&iv=' + IV_STRING } },
       { text: 'New Stock', web_app: { url: 'https://anbuchelva.in/stock-track/add-stock' } },
     ],
   ],

@@ -54,7 +54,7 @@ function processCallback(data, chatId, messageId, callbackText) {
 
 function processText(message, chatId) {
   if (message.text === '/start') {
-    sendToTelegram(chatId, '🙏 <b>Welcome to Investment Tracking Bot</b> 🙏', startKeyboard);
+    sendToTelegram(chatId, 'Bot Initiated!', startKeyboard);
   } else {
     sendToTelegram(chatId, 'Invalid input.');
   }
@@ -134,6 +134,15 @@ function processWebAppData(chatId, messageId, webAppData) {
       // var jsonResponse = JSON.parse(response.getContentText());
       // var messageID = jsonResponse.result.message_id;
       // }
+    } else if (buttonText == 'Add Stock') {
+      var stock = data['stock'];
+      var url = data['url'];
+      var sector = data['sector'];
+      newStock = [stock, url, '', sector];
+      var lastRow = stocksSheet.getLastRow();
+      newStock.unshift(lastRow - 1);
+      stocksSheet.getRange(lastRow + 1, 1, 1, 5).setValues([newStock]);
+      sendToTelegram(chatId, '☑️ ' + stock + ' is added!\nYou may refresh the price to get the latest market price.');
     }
   }
 }

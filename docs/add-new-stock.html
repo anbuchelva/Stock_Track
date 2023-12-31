@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"
+      integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Ruda:wght@400;800&display=swap" rel="stylesheet" />
+
+    <title>Add Stock</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="h1">Add Stock</div>
+      <form method="post" id="add-stock-form">
+        <input type="text" id="stock" name="stock" class="form-control" placeholder="Stock" required />
+        <input type="text" id="url" name="url" class="form-control" placeholder="Investing.com URL" required />
+        <input type="text" id="sector" name="sector" class="form-control" placeholder="Sector" />
+        <div class="alert-danger visually-hidden" id="alert">Please fill the mandatory fields.</div>
+      </form>
+      <script>
+        var title = document.title;
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+        Telegram.WebApp.MainButton.setText('ADD NEW STOCK');
+        Telegram.WebApp.MainButton.show();
+      </script>
+      <script src="js/validate.js"></script>
+    </div>
+  </body>
+</html>

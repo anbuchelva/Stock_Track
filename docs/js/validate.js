@@ -36,5 +36,16 @@ Telegram.WebApp.MainButton.onClick(() => {
       };
       Telegram.WebApp.sendData(JSON.stringify(transactionData));
     }
+  } else if (title == 'Add Stock') {
+    var validationStatus = validateForm('add-stock-form');
+    if (validationStatus) {
+      var stockInputData = {
+        form: title,
+        stock: stock.value,
+        url: url.value,
+        sector: sector.value,
+      };
+      Telegram.WebApp.sendData(JSON.stringify(stockInputData));
+    }
   }
 });

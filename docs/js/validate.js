@@ -28,6 +28,7 @@ Telegram.WebApp.MainButton.onClick(() => {
       var transactionData = {
         form: title,
         date: date.value,
+        txn_type: txn_type.value,
         stock: stock.value,
         quantity: quantity.value,
         price: price.value,

@@ -23,6 +23,11 @@
       <div class="h1">Record Stock Transactions</div>
       <form method="post" id="transaction-form">
         <input type="datetime-local" id="date" name="date" class="form-control" placeholder="Date & Time" required />
+        <select class="form-select" id="txn_type" name="txn_type" required>
+          <option selected disabled value="">Transaction Type</option>
+          <option>Buy</option>
+          <option>Sell</option>
+        </select>
         <select class="form-select" id="stock" name="stock" required>
           <option selected disabled value="">Select Stock</option>
         </select>

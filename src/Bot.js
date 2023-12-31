@@ -96,7 +96,7 @@ function sendPhotoToTelegram(chatId, photoBlob, caption) {
   return response;
 }
 
-function telegramSendVenue(chatId, latitude, longitude, title, address){  
+function telegramSendVenue(chatId, latitude, longitude, title, address) {
   var payload = {
     method: 'sendVenue',
     chat_id: String(chatId),
@@ -104,7 +104,7 @@ function telegramSendVenue(chatId, latitude, longitude, title, address){
     longitude: longitude,
     title: title,
     address: address,
-  }
+  };
   var data = {
     method: 'post',
     payload: payload,
@@ -112,7 +112,6 @@ function telegramSendVenue(chatId, latitude, longitude, title, address){
   var response = UrlFetchApp.fetch(TELEGRAM_URL, data);
   Logger.log(response.getContentText()); // Log the response content
   return response;
-  // var response = UrlFetchApp.fetch('https://api.telegram.org/bot'+BOT_TOKEN+'/sendVenue?chat_id='+ADMIN+'&latitude=12.94869039&longitude=80.20545613&title=test&address=test2');
   // Logger.log(response)
 }
 

@@ -74,7 +74,7 @@ function processWebAppData(chatId, messageId, webAppData) {
     var buttonText = webAppData['button_text'];
     var data = JSON.parse(webAppData.data);
     if (buttonText == 'Transactions') {
-      var dateTime = new Date(data['date_time']);
+      var dateTime = new Date(data['date']);
       var stock = data['stock'];
       var TransactionType = data['txn_type'];
       var quantity = data['quantity'];
@@ -84,7 +84,6 @@ function processWebAppData(chatId, messageId, webAppData) {
       var average_price = data['price'];
       var total_price = average_price * quantity;
       var notes = data['notes'];
-      var messageId = Number(webAppData['message_id']);
       newTransaction = [
         messageId,
         dateTime,
@@ -98,9 +97,39 @@ function processWebAppData(chatId, messageId, webAppData) {
         extractDate(dateTime).date,
         notes,
       ];
+      priceBeforeTxn = getPriceInfo(stock);
       var lastRow = transactionSheet.getLastRow();
       transactionSheet.getRange(lastRow + 1, 1, 1, 11).setValues([newTransaction]);
-      var messageText = '💵 A new transactions has been added\n' + '\nStock: ' + stock + '\nQuantity: ' + quantity + '\nPrice: ' + price;
+      priceAfterTxn = getPriceInfo(stock);
+      if (TransactionType === 'Buy') {
+        var messageText = '⬇️ There is a buy order\n';
+      } else {
+        var messageText = '⬆️ There is a sell order\n';
+      }
+      messageText +=
+        '\nStock: ' +
+        stock +
+        '\nQuantity: ' +
+        quantity +
+        '\nAverage Price: ' +
+        average_price +
+        '\nTotal Price: ' +
+        total_price +
+        '\n\n<b>Status before transaction</b>\nQuantity: ' +
+        priceBeforeTxn.currentQuantity +
+        '\nAverage Price: ' +
+        priceBeforeTxn.averagePrice +
+        '\nMarket Value: ' +
+        priceBeforeTxn.currentMarketValue +
+        '\n\n<b>Status after transaction</b>\nQuantity: ' +
+        priceAfterTxn.currentQuantity +
+        '\nAverage Price: ' +
+        priceAfterTxn.averagePrice +
+        '\nMarket Value: ' +
+        priceAfterTxn.currentMarketValue;
+      if (notes) {
+        messageText += '\nNotes: ' + notes;
+      }
       var response = sendToTelegram(chatId, messageText);
       var jsonResponse = JSON.parse(response.getContentText());
       var messageID = jsonResponse.result.message_id;

@@ -6,6 +6,6 @@ const startKeyboard = {
     ],
   ],
   resize_keyboard: true,
-  one_time_keyboard: true,
+  one_time_keyboard: false,
   // input_field_placeholder: 'Choose an option',
 };

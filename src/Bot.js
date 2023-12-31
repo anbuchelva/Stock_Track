@@ -23,7 +23,7 @@ function deleteWebhook() {
 }
 
 // Send message with inline buttons
-function sendToTelegram(chatId, message, keyboard, messageId) {
+function sendToTelegram(chatId, message, keyboard, messageId, remove_keyboard) {
   var payload = {
     method: 'sendMessage',
     chat_id: String(chatId),
@@ -33,7 +33,7 @@ function sendToTelegram(chatId, message, keyboard, messageId) {
   };
 
   var keyboardRemoveMarkup = {
-    remove_keyboard: true,
+    remove_keyboard: remove_keyboard,
   };
 
   if (keyboard) {

@@ -20,13 +20,14 @@ function doPost(request) {
           message_id: messageId,
           web_app_data: webAppData,
         } = message;
-      } else if (callback_query !== undefined) {
-        var {
-          from: { id: chatId },
-          message: { message_id: messageId, text: callbackText },
-          data,
-        } = callback_query;
       }
+    } else if (callback_query !== undefined) {
+      var {
+        from: { id: chatId },
+        message: { message_id: messageId, text: callbackText },
+        data,
+      } = callback_query;
+    }
     }
     if (ALLOWED_USER_IDS.includes(chatId)) {
       if (text !== undefined) {

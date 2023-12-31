@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"
+      integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/data.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Ruda:wght@400;800&display=swap" rel="stylesheet" />
+
+    <title>Transactions</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="h1">Record Stock Transactions</div>
+      <form method="post" id="transaction-form">
+        <input type="datetime-local" id="date" name="date" class="form-control" placeholder="Date & Time" required />
+        <select class="form-select" id="stock" name="stock" required>
+          <option selected disabled value="">Select Stock</option>
+        </select>
+        <input type="number" id="quantity" name="quantity" class="form-control" placeholder="Quantity" required />
+        <input type="number" id="price" name="price" class="form-control" placeholder="Average Price" step="any" required />
+        <input type="text" class="form-control" id="notes" name="notes" placeholder="Notes" />
+        <div class="alert-danger visually-hidden" id="alert">Please fill the mandatory fields.</div>
+      </form>
+      <script>
+        var title = document.title;
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+        Telegram.WebApp.MainButton.setText('ADD TRANSACTION');
+        Telegram.WebApp.MainButton.show();
+      </script>
+      <script src="js/validation.js"></script>
+    </div>
+  </body>
+</html>

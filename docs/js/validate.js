@@ -33,7 +33,7 @@ Telegram.WebApp.MainButton.onClick(() => {
         price: price.value,
         notes: notes.value,
       };
-      Telegram.WebApp.sendData(JSON.stringify(expenseData));
+      Telegram.WebApp.sendData(JSON.stringify(transactionData));
     }
   }
 });

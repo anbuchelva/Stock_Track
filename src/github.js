@@ -85,7 +85,7 @@ function pushFileToGithub(jsonFile, fileName) {
 }
 
 function updateFilesToGithub() {
-  const stockList = exportSheetToJson(stocksSheet, 3, 2, 1);
+  const stockList = exportSheetToJson(stocksSheet, 2, 2, 1);
   const encryptedStockList = encryptData(stockList);
   pushFileToGithub(encryptedStockList, 'stock_list.txt');
 }

@@ -18,30 +18,16 @@ async function decryptData(encFile) {
   }
 }
 
-function getDecryptedData(encryptedFile) {
-  decryptData(encryptedFile)
-    .then((decryptedJson) => {
-      return decryptedJson;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}
-
-function updateDropDown(data, sourceColHeader, targetElementID, conditionColHeader, conditionVal) {
+function updateDropDown(data, sourceColHeader, targetElementID) {
   try {
     var element = document.getElementById(targetElementID);
     var uniqueValues = new Set();
     data.forEach((item) => {
       var value = item[sourceColHeader];
-      if (!uniqueValues.has(value)) {
-        if (item[conditionColHeader] == conditionVal) {
-          var option = document.createElement('option');
-          option.text = value;
-          element.appendChild(option);
-          uniqueValues.add(value); // Add value to Set
-        }
-      }
+      var option = document.createElement('option');
+      option.text = value;
+      element.appendChild(option);
+      uniqueValues.add(value);
     });
     element.selectedIndex = 0;
   } catch (err) {
@@ -51,7 +37,7 @@ function updateDropDown(data, sourceColHeader, targetElementID, conditionColHead
 
 decryptData('data/stock_list.txt')
   .then((decryptedData) => {
-    updateDropDown(decryptedData, 'stock', 'stock', 'hide', 'No');
+    updateDropDown(decryptedData, 'Total', 'stock');
   })
   .catch((error) => {
     console.error(error);

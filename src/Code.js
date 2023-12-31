@@ -17,6 +17,7 @@ function doPost(request) {
         var {
           // from: { id: userId, username: username },
           chat: { id: chatId, first_name: firstName },
+          message_id: messageId,
           web_app_data: webAppData,
         } = message;
       } else if (callback_query !== undefined) {
@@ -33,7 +34,7 @@ function doPost(request) {
       } else if (callback_query !== undefined) {
         processCallback(data, chatId, messageId, callbackText);
       } else if (webAppData !== undefined) {
-        processWebAppData(chatId, webAppData);
+        processWebAppData(chatId, messageId, webAppData);
       }
     } else {
       sendToTelegram(chatId, 'Hey ' + firstName + '! This bot is meant for personal use as it handles personal data.');
@@ -68,7 +69,7 @@ function chartToImage(chart) {
   return imageBlob;
 }
 
-function processWebAppData(chatId, webAppData) {
+function processWebAppData(chatId, messageId, webAppData) {
   if (webAppData) {
     var buttonText = webAppData['button_text'];
     var data = JSON.parse(webAppData.data);

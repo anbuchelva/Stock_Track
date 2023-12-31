@@ -45,10 +45,10 @@ function doPost(request) {
 }
 
 function processCallback(data, chatId, messageId, callbackText) {
-  if (data === 'distance_vs_range') {
-    // sendDistanceRange(chatId);
-  } else if (data === 'distance_vs_efficiency') {
-    // sendDistanceEfficiency(chatId);
+  if (data === 'edit_transaction') {
+    editTransaction(chatId, messageId, callbackText);
+  } else if (data === 'delete_transaction') {
+    deleteTransaction(chatId, messageId);
   }
 }
 
@@ -130,9 +130,9 @@ function processWebAppData(chatId, messageId, webAppData) {
       if (notes) {
         messageText += '\nNotes: ' + notes;
       }
-      var response = sendToTelegram(chatId, messageText);
-      var jsonResponse = JSON.parse(response.getContentText());
-      var messageID = jsonResponse.result.message_id;
+      var response = sendToTelegram(chatId, messageText, editEntryKeyboard);
+      // var jsonResponse = JSON.parse(response.getContentText());
+      // var messageID = jsonResponse.result.message_id;
       // }
     }
   }
@@ -175,4 +175,57 @@ function getPriceInfo(stock) {
     }
   }
   return priceData;
+}
+
+function editTransaction(chatId, messageId, callbackText) {
+  resultArray = parseRideLogMsg(callbackText);
+  var data = JSON.stringify(resultArray);
+  var parametersEdit = {
+    keyboard: [
+      [
+        {
+          text: '✏️ Edit',
+          web_app: {
+            url:
+              'https://anbuchelva.in/stock-track/edit-transaction?data=' +
+              encodeURIComponent(data) +
+              '&cid=' +
+              chatId +
+              '&mid=' +
+              messageId +
+              '?key=' +
+              ENCRYPTION_KEY +
+              '&iv=' +
+              IV_STRING,
+          },
+        },
+        { text: '✖️ Cancel Edit' },
+      ],
+    ],
+    is_persistent: false,
+    resize_keyboard: true,
+    one_time_keyboard: true,
+  };
+  sendToTelegram(chatId, '⬇️ Click edit button to edit the transaction.', parametersEdit, messageId);
+}
+
+function deleteTransaction(chatId, messageId) {
+  var lastRow = transactionSheet.getLastRow();
+  if (lastRow > 50) {
+    var firstRow = lastRow - 49;
+    values = transactionSheet.getRange(firstRow, 1, 50, 1).getValues();
+  } else if (lastRow > 2) {
+    var firstRow = 2;
+    values = transactionSheet.getRange(2, 1, lastRow - 1, 1).getValues();
+  } else {
+    return false;
+  }
+  for (var i = values.length - 1; i >= 0; i--) {
+    if (values[i][0] === messageId) {
+      transactionSheet.deleteRow(i + firstRow);
+      return sendToTelegram(chatId, '✅ The selected entry has been deleted', null, messageId);
+    } else {
+      return sendToTelegram(chatId, '❌ Unable to find this entry in the database.', null, messageId);
+    }
+  }
 }

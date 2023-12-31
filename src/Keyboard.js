@@ -9,3 +9,13 @@ const startKeyboard = {
   one_time_keyboard: false,
   // input_field_placeholder: 'Choose an option',
 };
+
+var editEntryKeyboard = {
+  inline_keyboard: [
+    [
+      { text: '✏️ Edit', callback_data: 'edit_transaction' },
+      { text: '🗑️ Delete', callback_data: 'delete_transaction' },
+    ],
+  ],
+  resize_keyboard: true,
+};

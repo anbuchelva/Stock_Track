@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"
+      integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/data.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Ruda:wght@400;800&display=swap" rel="stylesheet" />
+
+    <title>Edit Transaction</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="h1">Edit Transaction</div>
+      <form method="post" id="edit-transaction-form">
+        <input type="datetime-local" value="" id="date" name="date" class="form-control" placeholder="Date & Time" required />
+        <select class="form-select" value="" id="txn_type" name="txn_type" required>
+          <option>Buy</option>
+          <option>Sell</option>
+        </select>
+        <select class="form-select" value="" id="stock" name="stock" required></select>
+        <input type="number" value="" id="quantity" name="quantity" class="form-control" placeholder="Quantity" required />
+        <input type="number" value="" id="price" name="price" class="form-control" placeholder="Average Price" step="any" required />
+        <input type="text" value="" class="form-control" id="notes" name="notes" placeholder="Notes" />
+        <div class="alert-danger visually-hidden" id="alert">Please fill the mandatory fields.</div>
+      </form>
+      <script>
+        var title = document.title;
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+        Telegram.WebApp.MainButton.setText('EDIT TRANSACTION');
+        Telegram.WebApp.MainButton.show();
+      </script>
+      <script src="js/validate.js"></script>
+      <script>
+        var queryString = window.location.search;
+        var urlParams = new URLSearchParams(queryString);
+        var jsonParam = urlParams.get('data');
+        var dictionary = JSON.parse(decodeURIComponent(jsonParam));
+        var cidValue = urlParams.get('cid');
+        var midValue = urlParams.get('mid');
+        document.getElementById('date').value = dictionary.date || '';
+        document.getElementById('txn_type').value = dictionary.txn_type || '';
+        document.getElementById('stock').value = dictionary.stock || '';
+        document.getElementById('quantity').value = dictionary.quantity || '';
+        document.getElementById('price').value = dictionary.price || '';
+        document.getElementById('notes').value = dictionary.notes || '';
+      </script>
+    </div>
+  </body>
+</html>

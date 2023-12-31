@@ -123,3 +123,27 @@ function extractDate(dateString) {
     date: dateResult,
   };
 }
+
+function getPriceInfo(stock) {
+  var priceData = {
+    currentQuantity: 0,
+    averagePrice: 0,
+    currentMarketValue: 0,
+  };
+  var stocksData = stocksSheet.getDataRange().getValues();
+
+  for (var i = 0; i < stocksData.length; i++) {
+    var rowData = stocksData[i];
+    var currentStock = rowData[1]; // Assuming stock is in column B
+
+    if (currentStock === stock) {
+      priceData = {
+        currentQuantity: rowData[6], // Assuming G is the 7th column (index 6)
+        averagePrice: parseFloat(rowData[10]).toFixed(2), // Assuming K is the 11th column (index 10)
+        currentMarketValue: parseFloat(rowData[19]).toFixed(2), // Assuming T is the 20th column (index 19)
+      };
+      break; // Stop searching once a match is found
+    }
+  }
+  return priceData;
+}

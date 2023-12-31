@@ -28,7 +28,6 @@ function doPost(request) {
         data,
       } = callback_query;
     }
-    }
     if (ALLOWED_USER_IDS.includes(chatId)) {
       if (text !== undefined) {
         processText(message, chatId);
@@ -179,35 +178,38 @@ function getPriceInfo(stock) {
 }
 
 function editTransaction(chatId, messageId, callbackText) {
-  resultArray = parseRideLogMsg(callbackText);
-  var data = JSON.stringify(resultArray);
-  var parametersEdit = {
-    keyboard: [
-      [
-        {
-          text: '✏️ Edit',
-          web_app: {
-            url:
-              'https://anbuchelva.in/stock-track/edit-transaction?data=' +
-              encodeURIComponent(data) +
-              '&cid=' +
-              chatId +
-              '&mid=' +
-              messageId +
-              '?key=' +
-              ENCRYPTION_KEY +
-              '&iv=' +
-              IV_STRING,
-          },
-        },
-        { text: '✖️ Cancel Edit' },
-      ],
-    ],
-    is_persistent: false,
-    resize_keyboard: true,
-    one_time_keyboard: true,
-  };
-  sendToTelegram(chatId, '⬇️ Click edit button to edit the transaction.', parametersEdit, messageId);
+  sendToTelegram(chatId, 'Edit option is under development!');
+  // resultArray = parseRideLogMsg(callbackText);
+  // It doesn't work and requires a fix
+  // var resultArray = [];
+  // var data = JSON.stringify(resultArray);
+  // var parametersEdit = {
+  //   keyboard: [
+  //     [
+  //       {
+  //         text: '✏️ Edit',
+  //         web_app: {
+  //           url:
+  //             'https://anbuchelva.in/stock-track/edit-transaction?data=' +
+  //             encodeURIComponent(data) +
+  //             '&cid=' +
+  //             chatId +
+  //             '&mid=' +
+  //             messageId +
+  //             '?key=' +
+  //             ENCRYPTION_KEY +
+  //             '&iv=' +
+  //             IV_STRING,
+  //         },
+  //       },
+  //       { text: '✖️ Cancel Edit' },
+  //     ],
+  //   ],
+  //   is_persistent: false,
+  //   resize_keyboard: true,
+  //   one_time_keyboard: true,
+  // };
+  // sendToTelegram(chatId, '⬇️ Click edit button to edit the transaction.', parametersEdit, messageId);
 }
 
 function deleteTransaction(chatId, messageId) {

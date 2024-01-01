@@ -140,10 +140,13 @@ function processWebAppData(chatId, messageId, webAppData) {
       var sector = data['sector'];
       newStock = [stock, url, '', sector];
       var lastRow = stocksSheet.getLastRow();
-      newStock.unshift(lastRow - 1);
-      stocksSheet.getRange(lastRow + 1, 1, 1, 5).setValues([newStock]);
-      sendToTelegram(chatId, '☑️ ' + stock + ' is added!\nYou may refresh the price to get the latest market price.');
-    }
+      var newStock = [stock, sector];
+      var newPriceHistory = [stock, url];
+      newStock.unshift(stocksSheetLastRow - 1); //adding ID here.
+      newPriceHistory.unshift(priceHistorySheetLastRow); //adding ID here
+      stocksSheet.getRange(stocksSheetLastRow + 1, 1, 1, 3).setValues([newStock]);
+      priceHistorySheet.getRange(priceHistorySheetLastRow + 1, 1, 1, 3).setValues([newPriceHistory]);
+      stocksSheet.getRange(stocksSheetLastRow, 6, 2, 21).copyTo(stocksSheet.getActiveRange(), SpreadsheetApp.CopyPasteType.PASTE_NORMAL, false);
   }
 }
 

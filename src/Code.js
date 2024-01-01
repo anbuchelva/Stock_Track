@@ -134,12 +134,12 @@ function processWebAppData(chatId, messageId, webAppData) {
       // var jsonResponse = JSON.parse(response.getContentText());
       // var messageID = jsonResponse.result.message_id;
       // }
-    } else if (buttonText == 'Add Stock') {
+    } else if (buttonText == 'New Stock') {
+      var stocksSheetLastRow = stocksSheet.getLastRow();
+      var priceHistorySheetLastRow = priceHistorySheet.getLastRow();
       var stock = data['stock'];
       var url = data['url'];
       var sector = data['sector'];
-      newStock = [stock, url, '', sector];
-      var lastRow = stocksSheet.getLastRow();
       var newStock = [stock, sector];
       var newPriceHistory = [stock, url];
       newStock.unshift(stocksSheetLastRow - 1); //adding ID here.
@@ -147,6 +147,8 @@ function processWebAppData(chatId, messageId, webAppData) {
       stocksSheet.getRange(stocksSheetLastRow + 1, 1, 1, 3).setValues([newStock]);
       priceHistorySheet.getRange(priceHistorySheetLastRow + 1, 1, 1, 3).setValues([newPriceHistory]);
       stocksSheet.getRange(stocksSheetLastRow, 6, 2, 21).copyTo(stocksSheet.getActiveRange(), SpreadsheetApp.CopyPasteType.PASTE_NORMAL, false);
+      sendToTelegram(chatId, '☑️ ' + stock + ' is added!\nYou may refresh the price to get the latest market price.');
+    }
   }
 }
 

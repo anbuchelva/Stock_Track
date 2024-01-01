@@ -161,6 +161,9 @@ function processWebAppData(chatId, messageId, webAppData) {
       stocksSheet.getRange(stocksSheetLastRow + 1, 6).activate();
       stocksSheet.getRange(stocksSheetLastRow, 6, 1, 21).copyTo(stocksSheet.getActiveRange(), SpreadsheetApp.CopyPasteType.PASTE_NORMAL, false);
       sendToTelegram(chatId, '✅ ' + stock + ' is added!\nYou may refresh the price to get the latest market price.');
+      updateFilesToGithub();
+      Utilities.sleep(60000);
+      sendToTelegram(chatId, '✅ The new stock is updated in github repo as well. You may need to clear the cache of telegram to see it in the drop down.');
     }
   }
 }

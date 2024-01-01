@@ -74,6 +74,7 @@ function processWebAppData(chatId, messageId, webAppData) {
     var buttonText = webAppData['button_text'];
     var data = JSON.parse(webAppData.data);
     if (buttonText == 'Transactions') {
+      var transactionSheetlastRow = transactionSheet.getLastRow();
       var dateTime = new Date(data['date']);
       var stock = data['stock'];
       var TransactionType = data['txn_type'];
@@ -84,7 +85,7 @@ function processWebAppData(chatId, messageId, webAppData) {
       var average_price = data['price'];
       var total_price = average_price * quantity;
       var notes = data['notes'];
-      newTransaction = [
+      var newTransaction = [
         messageId,
         dateTime,
         stock,
@@ -98,8 +99,7 @@ function processWebAppData(chatId, messageId, webAppData) {
         notes,
       ];
       priceBeforeTxn = getPriceInfo(stock);
-      var lastRow = transactionSheet.getLastRow();
-      transactionSheet.getRange(lastRow + 1, 1, 1, 11).setValues([newTransaction]);
+      transactionSheet.getRange(transactionSheetlastRow + 1, 1, 1, 11).setValues([newTransaction]);
       priceAfterTxn = getPriceInfo(stock);
       if (TransactionType === 'Buy') {
         var messageText = '⬇️ There is a buy order\n';

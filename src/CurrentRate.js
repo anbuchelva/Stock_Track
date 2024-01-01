@@ -1,8 +1,13 @@
 function updateStockPrices() {
-  const stocksSheetLastRow = stocksSheet.getLastRow();
-  const stocks = stocksSheet.getRange(2, 2, stocksSheetLastRow - 1, 5).getValues();
+  const priceHistorySheetLastRow = priceHistorySheet.getLastRow();
   const priceHistorySheetLastCol = priceHistorySheet.getLastColumn();
+  const stocks = priceHistorySheet.getRange(2, 2, priceHistorySheetLastRow - 1, 2).getValues();
+  const lastUpdatedDate = priceHistorySheet.getRange(1, priceHistorySheetLastCol).getValue();
   var currentDate = new Date().toLocaleDateString();
+  // if the price updated on the same date, replace the column
+  if (currentDate == lastUpdatedDate) {
+    priceHistorySheetLastRow - 1;
+  }
   var stockPriceListPrice = [[currentDate]];
   // var stockPriceListStock = []
   for (let i = 0; i < stocks.length; i++) {
@@ -10,17 +15,11 @@ function updateStockPrices() {
     var stockPrice = getLastPrice(stocks[i][1]);
     if (stockPrice) {
       stockPriceListPrice.push([stockPrice]);
-      // stockPriceListStock.push([currentDate, stockPrice])
     } else {
-      stockPriceListPrice.push(['']);
-      // stockPriceListStock.push(["", ""])
+      stockPriceListPrice.push(['']); // if price is not retrieved
     }
   }
-  // Update the 'Price History' sheet
   priceHistorySheet.getRange(1, priceHistorySheetLastCol + 1, stockPriceListPrice.length, 1).setValues(stockPriceListPrice);
-
-  // Update the 'Stocks' sheet
-  // stocksSheet.getRange(2, 6, stockPriceListStock.length, 2).setValues(stockPriceListStock);
 }
 
 function getLastPrice(url) {

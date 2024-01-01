@@ -158,7 +158,8 @@ function processWebAppData(chatId, messageId, webAppData) {
       newPriceHistory.unshift(priceHistorySheetLastRow); //adding ID here
       stocksSheet.getRange(stocksSheetLastRow + 1, 1, 1, 3).setValues([newStock]);
       priceHistorySheet.getRange(priceHistorySheetLastRow + 1, 1, 1, 3).setValues([newPriceHistory]);
-      stocksSheet.getRange(stocksSheetLastRow, 6, 2, 21).copyTo(stocksSheet.getActiveRange(), SpreadsheetApp.CopyPasteType.PASTE_NORMAL, false);
+      stocksSheet.getRange(stocksSheetLastRow + 1, 6).activate();
+      stocksSheet.getRange(stocksSheetLastRow, 6, 1, 21).copyTo(stocksSheet.getActiveRange(), SpreadsheetApp.CopyPasteType.PASTE_NORMAL, false);
       sendToTelegram(chatId, '✅ ' + stock + ' is added!\nYou may refresh the price to get the latest market price.');
     }
   }

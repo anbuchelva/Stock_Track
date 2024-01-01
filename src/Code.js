@@ -102,9 +102,10 @@ function processWebAppData(chatId, messageId, webAppData) {
         extractDate(dateTime).date,
         notes,
       ];
-      priceBeforeTxn = getPriceInfo(stock);
+      var priceBeforeTxn = getPriceInfo(stock);
       transactionSheet.getRange(transactionSheetlastRow + 1, 1, 1, 11).setValues([newTransaction]);
-      priceAfterTxn = getPriceInfo(stock);
+      var priceAfterTxn = getPriceInfo(stock);
+      var currentMakketValue = average_price * priceAfterTxn.currentQuantity;
       if (TransactionType === 'Buy') {
         var messageText = '⬇️ There is a buy order\n';
       } else {
@@ -123,14 +124,21 @@ function processWebAppData(chatId, messageId, webAppData) {
         priceBeforeTxn.currentQuantity +
         '\nAverage Price: ' +
         priceBeforeTxn.averagePrice +
-        '\nMarket Value: ' +
-        priceBeforeTxn.currentMarketValue +
+        '\nInvested Amount: ' +
+        priceBeforeTxn.investedAmount +
         '\n\n<b>Status after transaction</b>\nQuantity: ' +
         priceAfterTxn.currentQuantity +
         '\nAverage Price: ' +
         priceAfterTxn.averagePrice +
-        '\nMarket Value: ' +
-        priceAfterTxn.currentMarketValue;
+        '\nInvested Amount: ' +
+        priceAfterTxn.investedAmount +
+        '\n\nCMP: ' +
+        currentMakketValue.toFixed(0) +
+        '\nP&L: ' +
+        (currentMakketValue - priceAfterTxn.investedAmount).toFixed(0) +
+        ' | ' +
+        (currentMakketValue / priceAfterTxn.investedAmount - 1).toFixed(2) * 100 +
+        '%';
       if (notes) {
         messageText += '\nNotes: ' + notes;
       }
@@ -187,7 +195,7 @@ function getPriceInfo(stock) {
       priceData = {
         currentQuantity: rowData[6], // Assuming G is the 7th column (index 6)
         averagePrice: parseFloat(rowData[10]).toFixed(2), // Assuming K is the 11th column (index 10)
-        currentMarketValue: parseFloat(rowData[19]).toFixed(2), // Assuming T is the 20th column (index 19)
+        investedAmount: parseFloat(rowData[17]).toFixed(0), // Assuming T is the 18th column (index 17)
       };
       break; // Stop searching once a match is found
     }

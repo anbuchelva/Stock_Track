@@ -58,7 +58,7 @@ function processText(message, chatId) {
   } else if (message.text.toUpperCase() == 'UP') {
     var response = sendToTelegram(chatId, '🔀 Price update is initiated!');
     updateStockPrices();
-    sendToTelegram(chatId, '✅ Prices is completed!');
+    sendToTelegram(chatId, '✅ Prices update is completed!');
   } else {
     sendToTelegram(chatId, 'Invalid input.');
   }
@@ -151,7 +151,7 @@ function processWebAppData(chatId, messageId, webAppData) {
       stocksSheet.getRange(stocksSheetLastRow + 1, 1, 1, 3).setValues([newStock]);
       priceHistorySheet.getRange(priceHistorySheetLastRow + 1, 1, 1, 3).setValues([newPriceHistory]);
       stocksSheet.getRange(stocksSheetLastRow, 6, 2, 21).copyTo(stocksSheet.getActiveRange(), SpreadsheetApp.CopyPasteType.PASTE_NORMAL, false);
-      sendToTelegram(chatId, '☑️ ' + stock + ' is added!\nYou may refresh the price to get the latest market price.');
+      sendToTelegram(chatId, '✅ ' + stock + ' is added!\nYou may refresh the price to get the latest market price.');
     }
   }
 }

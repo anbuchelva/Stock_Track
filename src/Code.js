@@ -154,18 +154,23 @@ function processWebAppData(chatId, messageId, webAppData) {
       var stock = data['stock'];
       var url = data['url'];
       var sector = data['sector'];
-      var newStock = [stock, sector];
-      var newPriceHistory = [stock, url];
-      newStock.unshift(stocksSheetLastRow - 1); //adding ID here.
-      newPriceHistory.unshift(priceHistorySheetLastRow); //adding ID here
-      stocksSheet.getRange(stocksSheetLastRow + 1, 1, 1, 3).setValues([newStock]);
-      priceHistorySheet.getRange(priceHistorySheetLastRow + 1, 1, 1, 3).setValues([newPriceHistory]);
-      stocksSheet.getRange(stocksSheetLastRow + 1, 6).activate();
-      stocksSheet.getRange(stocksSheetLastRow, 6, 1, 21).copyTo(stocksSheet.getActiveRange(), SpreadsheetApp.CopyPasteType.PASTE_NORMAL, false);
-      sendToTelegram(chatId, '✅ ' + stock + ' is added!\nYou may refresh the price to get the latest market price.');
-      updateFilesToGithub();
-      Utilities.sleep(60000);
-      sendToTelegram(chatId, '✅ The new stock is updated in github repo as well. You may need to clear the cache of telegram to see it in the drop down.');
+      var stockExists = stocksData.some(row => row[1] === stock);
+      if (!stockExists) {
+        var newStock = [stock, sector];
+        var newPriceHistory = [stock, url];
+        newStock.unshift(stocksSheetLastRow - 1); //adding ID here.
+        newPriceHistory.unshift(priceHistorySheetLastRow); //adding ID here
+        stocksSheet.getRange(stocksSheetLastRow + 1, 1, 1, 3).setValues([newStock]);
+        priceHistorySheet.getRange(priceHistorySheetLastRow + 1, 1, 1, 3).setValues([newPriceHistory]);
+        stocksSheet.getRange(stocksSheetLastRow + 1, 6).activate();      
+        stocksSheet.getRange(stocksSheetLastRow, 6, 1, 21).copyTo(stocksSheet.getActiveRange(), SpreadsheetApp.CopyPasteType.PASTE_NORMAL, false);      
+        var rangeStock = stocksSheet.getRange(3, 2, stocksSheetLastRow - 1, stocksSheetLastCol-1);
+        rangeStock.sort([{column: 2, ascending: true}]);
+        updateFilesToGithub(chatId, stock);
+      } else {
+        sendToTelegram(chatId, '<b>' + stock + '</b> already in the tracking list.')
+        return;
+      }
     }
   }
 }

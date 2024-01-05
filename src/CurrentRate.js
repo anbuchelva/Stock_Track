@@ -4,9 +4,10 @@ function updateStockPrices(chatId) {
   var stocks = priceHistorySheet.getRange(2, 2, priceHistorySheetLastRow - 1, 2).getValues();
   var lastUpdatedDate = priceHistorySheet.getRange(1, priceHistorySheetLastCol).getValue();
   var currentDate = new Date().toLocaleDateString();
+  var lastUpdatedDateString = Utilities.formatDate(lastUpdatedDate, 'GMT+5:30', 'M/d/yyyy');
   // if the price updated on the same date, replace the column
-  if (currentDate == lastUpdatedDate) {
-    priceHistorySheetLastRow - 1;
+  if (currentDate == lastUpdatedDateString) {
+    priceHistorySheetLastCol--;
   }
   var stockPriceListPrice = [[currentDate]];
   // var stockPriceListStock = []

@@ -1,8 +1,7 @@
-function updateStockPrices() {
-  const priceHistorySheetLastRow = priceHistorySheet.getLastRow();
-  const priceHistorySheetLastCol = priceHistorySheet.getLastColumn();
-  const stocks = priceHistorySheet.getRange(2, 2, priceHistorySheetLastRow - 1, 2).getValues();
-  const lastUpdatedDate = priceHistorySheet.getRange(1, priceHistorySheetLastCol).getValue();
+  var priceHistorySheetLastRow = priceHistorySheet.getLastRow();
+  var priceHistorySheetLastCol = priceHistorySheet.getLastColumn();
+  var stocks = priceHistorySheet.getRange(2, 2, priceHistorySheetLastRow - 1, 2).getValues();
+  var lastUpdatedDate = priceHistorySheet.getRange(1, priceHistorySheetLastCol).getValue();
   var currentDate = new Date().toLocaleDateString();
   // if the price updated on the same date, replace the column
   if (currentDate == lastUpdatedDate) {

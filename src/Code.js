@@ -74,6 +74,7 @@ function chartToImage(chart) {
 
 function processWebAppData(chatId, messageId, webAppData) {
   if (webAppData) {
+    Logger.log(webAppData);
     var buttonText = webAppData['button_text'];
     var data = JSON.parse(webAppData.data);
     if (buttonText == 'Transactions') {

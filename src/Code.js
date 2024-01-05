@@ -146,8 +146,10 @@ function processWebAppData(chatId, messageId, webAppData) {
       // var jsonResponse = JSON.parse(response.getContentText());
       // var messageID = jsonResponse.result.message_id;
       // }
-    } else if (buttonText == 'New Stock') {
-      var stocksSheetLastRow = stocksSheet.getLastRow();
+    } else if (buttonText == 'New Stock') {      
+      var stocksData = stocksSheet.getDataRange().getValues();
+      var stocksSheetLastRow = stocksData.length
+      var stocksSheetLastCol = stocksData[0].length
       var priceHistorySheetLastRow = priceHistorySheet.getLastRow();
       var stock = data['stock'];
       var url = data['url'];

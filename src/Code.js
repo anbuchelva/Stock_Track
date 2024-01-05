@@ -132,9 +132,9 @@ function processWebAppData(chatId, messageId, webAppData) {
         priceAfterTxn.averagePrice +
         '\nInvested Amount: ' +
         priceAfterTxn.investedAmount +
-        '\n\nCMP: ' +
+        '\n\nCurrent Value: ' +
         currentMakketValue.toFixed(0) +
-        '\nP&L: ' +
+        '\nProfit & Loss: ' +
         (currentMakketValue - priceAfterTxn.investedAmount).toFixed(0) +
         ' | ' +
         (currentMakketValue / priceAfterTxn.investedAmount - 1).toFixed(2) * 100 +

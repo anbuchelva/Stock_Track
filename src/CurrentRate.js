@@ -20,6 +20,7 @@ function updateStockPrices() {
     }
   }
   priceHistorySheet.getRange(1, priceHistorySheetLastCol + 1, stockPriceListPrice.length, 1).setValues(stockPriceListPrice);
+  sendToTelegram(chatId, '✅ Prices update is completed!');
 }
 
 function getLastPrice(url) {

@@ -56,9 +56,8 @@ function processText(message, chatId) {
   if (message.text === '/start') {
     sendToTelegram(chatId, 'Bot Initiated!', startKeyboard);
   } else if (message.text.toUpperCase() == 'UP') {
-    var response = sendToTelegram(chatId, '🔀 Price update is initiated!');
-    updateStockPrices();
-    sendToTelegram(chatId, '✅ Prices update is completed!');
+    sendToTelegram(chatId, '🔀 Price update is initiated!');
+    updateStockPrices(chatId);
   } else {
     sendToTelegram(chatId, 'Invalid input.');
   }

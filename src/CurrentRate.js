@@ -1,3 +1,4 @@
+function updateStockPrices(chatId) {
   var priceHistorySheetLastRow = priceHistorySheet.getLastRow();
   var priceHistorySheetLastCol = priceHistorySheet.getLastColumn();
   var stocks = priceHistorySheet.getRange(2, 2, priceHistorySheetLastRow - 1, 2).getValues();

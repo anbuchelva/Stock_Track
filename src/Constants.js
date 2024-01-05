@@ -10,6 +10,7 @@ const GSHEETS = SpreadsheetApp.getActiveSpreadsheet();
 const stocksSheet = GSHEETS.getSheetByName('Stocks');
 const priceHistorySheet = GSHEETS.getSheetByName('Price History');
 const transactionSheet = GSHEETS.getSheetByName('Transactions');
+const logSheet = GSHEETS.getSheetByName('log');
 
 var githubToken = USER_PROPERTIES.getProperty('githubToken');
 var repoOwner = USER_PROPERTIES.getProperty('repoOwner');

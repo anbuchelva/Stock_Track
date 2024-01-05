@@ -84,8 +84,13 @@ function pushFileToGithub(jsonFile, fileName) {
   }
 }
 
-function updateFilesToGithub() {
+function updateFilesToGithub(chatId, stock) {
   const stockList = exportSheetToJson(stocksSheet, 2, 2, 1);
   const encryptedStockList = encryptData(stockList);
   pushFileToGithub(encryptedStockList, 'stock_list.txt');
+  if(stock){
+    sendToTelegram(chatId, '✅ ' + stock + ' is added!\nYou may refresh the price to get the latest market price.');
+  } else {
+  sendToTelegram(chatId, '✅ The stock list is updated in github.');
+  }
 }

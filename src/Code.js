@@ -90,7 +90,7 @@ function processWebAppData(chatId, messageId, webAppData) {
       var total_price = average_price * quantity;
       var notes = data['notes'];
       var newTransaction = [
-        messageId+1,
+        messageId + 1,
         dateTime,
         stock,
         TransactionType,
@@ -146,15 +146,15 @@ function processWebAppData(chatId, messageId, webAppData) {
       // var jsonResponse = JSON.parse(response.getContentText());
       // var messageID = jsonResponse.result.message_id;
       // }
-    } else if (buttonText == 'New Stock') {      
+    } else if (buttonText == 'New Stock') {
       var stocksData = stocksSheet.getDataRange().getValues();
-      var stocksSheetLastRow = stocksData.length
-      var stocksSheetLastCol = stocksData[0].length
+      var stocksSheetLastRow = stocksData.length;
+      var stocksSheetLastCol = stocksData[0].length;
       var priceHistorySheetLastRow = priceHistorySheet.getLastRow();
       var stock = data['stock'];
       var url = data['url'];
       var sector = data['sector'];
-      var stockExists = stocksData.some(row => row[1] === stock);
+      var stockExists = stocksData.some((row) => row[1] === stock);
       if (!stockExists) {
         var newStock = [stock, sector];
         var newPriceHistory = [stock, url];
@@ -162,13 +162,13 @@ function processWebAppData(chatId, messageId, webAppData) {
         newPriceHistory.unshift(priceHistorySheetLastRow); //adding ID here
         stocksSheet.getRange(stocksSheetLastRow + 1, 1, 1, 3).setValues([newStock]);
         priceHistorySheet.getRange(priceHistorySheetLastRow + 1, 1, 1, 3).setValues([newPriceHistory]);
-        stocksSheet.getRange(stocksSheetLastRow + 1, 6).activate();      
-        stocksSheet.getRange(stocksSheetLastRow, 6, 1, 21).copyTo(stocksSheet.getActiveRange(), SpreadsheetApp.CopyPasteType.PASTE_NORMAL, false);      
-        var rangeStock = stocksSheet.getRange(3, 2, stocksSheetLastRow - 1, stocksSheetLastCol-1);
-        rangeStock.sort([{column: 2, ascending: true}]);
+        stocksSheet.getRange(stocksSheetLastRow + 1, 6).activate();
+        stocksSheet.getRange(stocksSheetLastRow, 6, 1, 21).copyTo(stocksSheet.getActiveRange(), SpreadsheetApp.CopyPasteType.PASTE_NORMAL, false);
+        var rangeStock = stocksSheet.getRange(3, 2, stocksSheetLastRow - 1, stocksSheetLastCol - 1);
+        rangeStock.sort([{ column: 2, ascending: true }]);
         updateFilesToGithub(chatId, stock);
       } else {
-        sendToTelegram(chatId, '<b>' + stock + '</b> already in the tracking list.')
+        sendToTelegram(chatId, '<b>' + stock + '</b> already in the tracking list.');
         return;
       }
     }

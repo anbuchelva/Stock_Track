@@ -90,7 +90,7 @@ function processWebAppData(chatId, messageId, webAppData) {
       var total_price = average_price * quantity;
       var notes = data['notes'];
       var newTransaction = [
-        messageId,
+        messageId+1,
         dateTime,
         stock,
         TransactionType,
